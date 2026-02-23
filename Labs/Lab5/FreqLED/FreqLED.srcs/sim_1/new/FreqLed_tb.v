@@ -48,16 +48,18 @@ module FreqLed_tb #(
         sys_clk_pin_tb = 0; // Initialize clock to a known state
         reset_tb = 1;
         select_tb = 0; // Initialize select to a known state
-        #100;
+        #10;
         reset_tb = 0;
 
         // Drive testbench values
-        for (integer i = 0; i < (1 << WIDTH_TB); i = i + 1) begin
-            #100;
-            for (select_tb = 0; select_tb < (1 << SELECT_TB); select_tb = select_tb + 1) begin
-                #100; 
+        for (integer i = 0; i < WIDTH_TB; i = i + 1) begin
+            #50;
+            for (integer sel = 0; sel < SELECT_TB; sel = sel + 1) begin
+                select_tb = sel;
+                #50;
             end
         end
+        $finish;
     end
 
     
