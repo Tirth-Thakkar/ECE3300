@@ -4,10 +4,9 @@ module TopModule #(
     parameter WIDTH = 32,
     parameter SELECT = $clog2(WIDTH)*3
     ) (
-        input sys_clk_pin,
+        input CLK100MHZ,
         input reset, 
         input [SELECT-1:0] select,
-        output [WIDTH-1:0] counter_out_tb, // for debugging
         output red,
         output green,
         output blue
@@ -15,7 +14,7 @@ module TopModule #(
 
     wire [WIDTH-1:0] counter_out;
     Counter #(.WIDTH(WIDTH)) counter_inst (
-        .clk(sys_clk_pin),
+        .clk(CLK100MHZ),
         .rst_n(reset),
         .count(counter_out)
     );
@@ -39,8 +38,7 @@ module TopModule #(
         .in(counter_out),
         .sel(select[SELECT-1:2*SEL_CHUNK]),
         .out(blue)
-    );
 
-    assign counter_out_tb = counter_out;
+    );
 
 endmodule

@@ -25,28 +25,26 @@ module FreqLed_tb #(
     parameter SELECT_TB = $clog2(WIDTH_TB)*3
     );
     
-    reg sys_clk_pin_tb;
+    reg CLK100MHZ_tb;
     reg reset_tb;
     reg [SELECT_TB-1:0] select_tb;
     wire red_tb;
     wire green_tb;
     wire blue_tb;
-    wire [WIDTH_TB-1:0] counter_out_tb;
 
     TopModule #(.WIDTH(WIDTH_TB), .SELECT(SELECT_TB)) uut (
-        .sys_clk_pin(sys_clk_pin_tb),
+        .CLK100MHZ(CLK100MHZ_tb),
         .reset(reset_tb),
         .select(select_tb),
         .red(red_tb),
         .green(green_tb),
-        .blue(blue_tb),
-        .counter_out_tb(counter_out_tb)
+        .blue(blue_tb)
     );
 
-    always #5 sys_clk_pin_tb = ~sys_clk_pin_tb; // 100 MHz clock
+    always #5 CLK100MHZ_tb = ~CLK100MHZ_tb; // 100 MHz clock
 
     initial begin
-        sys_clk_pin_tb = 0; // known starting state
+        CLK100MHZ_tb = 0; // known starting state
         // rst_n on DUT is active‑low, so start asserted then release
         reset_tb = 0;          // assert reset
         select_tb = 0;        // initialize select field
