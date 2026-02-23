@@ -6,7 +6,7 @@ module MUX #(
     ) (
         input [width-1:0] in,
         input [sel_width-1:0] sel,
-        output [width-1:0] out
+        output out
     );
 
     assign out = in[sel];
