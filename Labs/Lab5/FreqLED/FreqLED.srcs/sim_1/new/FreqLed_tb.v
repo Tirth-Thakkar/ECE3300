@@ -22,36 +22,38 @@
 
 module FreqLed_tb #(
     parameter WIDTH_TB = 32,
-    parameter SELECT_TB = $clog2(WIDTH_TB)*3,
-    parameter CHANNEL_TB = WIDTH_TB/3
+    parameter SELECT_TB = $clog2(WIDTH_TB)*3
     );
     
     reg sys_clk_pin_tb;
     reg reset_tb;
     reg [SELECT_TB-1:0] select_tb;
-    wire [CHANNEL_TB-1:0] red_tb;
-    wire [CHANNEL_TB-1:0] green_tb;
-    wire [CHANNEL_TB-1:0] blue_tb;
+    wire red_tb;
+    wire green_tb;
+    wire blue_tb;
+    wire [WIDTH_TB-1:0] counter_out_tb;
 
-    TopModule #(.WIDTH(WIDTH_TB), .SELECT(SELECT_TB), .CHANNEL(CHANNEL_TB)) uut (
+    TopModule #(.WIDTH(WIDTH_TB), .SELECT(SELECT_TB)) uut (
         .sys_clk_pin(sys_clk_pin_tb),
         .reset(reset_tb),
         .select(select_tb),
         .red(red_tb),
         .green(green_tb),
-        .blue(blue_tb)
+        .blue(blue_tb),
+        .counter_out_tb(counter_out_tb)
     );
 
     always #5 sys_clk_pin_tb = ~sys_clk_pin_tb; // 100 MHz clock
 
     initial begin
-        sys_clk_pin_tb = 0; // Initialize clock to a known state
-        reset_tb = 1;
-        select_tb = 0; // Initialize select to a known state
+        sys_clk_pin_tb = 0; // known starting state
+        // rst_n on DUT is active‑low, so start asserted then release
+        reset_tb = 0;          // assert reset
+        select_tb = 0;        // initialize select field
         #10;
-        reset_tb = 0;
+        reset_tb = 1;          // deassert reset, counter can run
 
-        // Drive testbench values
+        // step through selects over time
         for (integer i = 0; i < WIDTH_TB; i = i + 1) begin
             #50;
             for (integer sel = 0; sel < SELECT_TB; sel = sel + 1) begin
