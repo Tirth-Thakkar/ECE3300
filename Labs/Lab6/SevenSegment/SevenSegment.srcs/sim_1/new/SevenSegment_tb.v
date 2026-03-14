@@ -23,9 +23,9 @@
 module SevenSegment_tb();
 
     reg CLK100MHZ_tb;
-    reg [15:0] in_tb;
+    reg [3:0] in_tb;
     wire [6:0] seg_tb;
-    wire [7:0] an_tb;
+    wire an_tb;
 
     always #5 CLK100MHZ_tb = ~CLK100MHZ_tb; // Generate clock signal
 
@@ -39,7 +39,7 @@ module SevenSegment_tb();
     initial begin
         CLK100MHZ_tb = 0; // known starting state
         #50; // Wait for reset
-        for(integer i = 0; i < 2**15; i = i + 1) begin
+        for(integer i = 0; i < 2**4; i = i + 1) begin
                 in_tb = i; // Test all possible input combinations
                 #50; // Wait for the output to stabilize
         end
