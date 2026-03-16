@@ -1,0 +1,43 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 03/15/2026 06:29:19 PM
+// Design Name: 
+// Module Name: SevenSegDecoder_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module SevenSegDecoder_tb();
+
+    reg [3:0] val_tb;
+    wire [6:0] seg_tb;
+    wire anode_tb;
+
+    SevenSegDecoder uut (
+        .val(val_tb),
+        .seg(seg_tb),
+        .anode(anode_tb)
+    );
+
+    initial begin
+        // Test all values from 0 to 15
+        for (val_tb = 0; val_tb < 16; val_tb = val_tb + 1) begin
+            #10; // Wait for 10 time units between changes
+        end
+        $finish; // End the simulation after testing all values
+    end
+
+endmodule

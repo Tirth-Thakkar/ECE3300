@@ -18,12 +18,13 @@ module TopModule #(
     );
 
     // Instantiate the SpeedController
-    wire [SYS_CTRL_WIDTH-1:0] adder_clk;
+    // It outputs a single-bit derived clock (slower/faster based on speed_setting)
+    wire adder_clk;
     SpeedController #(.CNTRL_WIDTH(SYS_WIDTH)) speed_controller (
         .clk(clk),
         .rst(sys_rst),
         .speed_setting(speed_setting),
-        .cntrl_speed(adder_clk) // Connect to the control speed output 
+        .cntrl_speed(adder_clk) // Derived clock output
     );
 
     wire [CNT_WIDTH-1:0] counter_output;
@@ -32,7 +33,7 @@ module TopModule #(
         .rst(cntr_rst || sys_rst), // Counter Reset or system reset
         .up_down(cntr_up_down),
         .enable(cntr_enable),
-        .count(counter_output) 
+        .count(counter_output)
     );
 
     wire [3:0] dsp_out;
