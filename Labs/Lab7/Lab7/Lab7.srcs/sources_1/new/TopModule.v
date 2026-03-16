@@ -6,16 +6,16 @@ module TopModule #(
     parameter SYS_CTRL_WIDTH = $clog2(SYS_WIDTH)
     )(
         input clk,
-        input sys_rst,
+        input sys_rst, // BTNC
         input sys_toggle, // 0 = counter output, 1 = user input
-        input cntr_rst,
+        input cntr_rst, // BTNU
         input cntr_enable,
         input cntr_up_down, // 1 for up, 0 for down
         input [SYS_CTRL_WIDTH-1:0] speed_setting, // 5-bit input for speed setting (0-31)
         input [3:0] usr_input,
 
         output [6:0] seg, // Output for 7-segment display
-        output anode
+        output [7:0] anodes
     );
 
     // Instantiate the SpeedController
@@ -47,11 +47,12 @@ module TopModule #(
     
     SevenSegDecoder seven_seg_decoder (
         .val(dsp_out), // Connect the mux output to the decoder input
-        .anode(anode), 
+        .anodes(anodes), // Pass all anodes so the decoder can blank segments when no digit is enabled
         .seg(seg) 
     );
 
     // Drive the 7-segment anode for a single-digit display (active-low enable)
-    assign anode = 1'b0;
+    assign anodes[0] = 1'b0;
+    assign anodes[7:1] = 7'b1111111; // Disable other digits if present
 
 endmodule

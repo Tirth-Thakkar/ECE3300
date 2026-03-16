@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 module SevenSegDecoder (
     input [3:0] val,
-    input anode,  
+    input [7:0] anodes,  // Active-low anode enables for 8 digits
     output [6:0] seg // active-LOW {a,b,c,d,e,f,g}
 );
     
@@ -27,7 +27,9 @@ module SevenSegDecoder (
             default: seg_tmp=7'b1111111; // blank
         endcase
     end
-    
-    assign seg = anode ? 7'b1111111 : seg_tmp; // If anode is high, turn off all segments
 
-endmodule //Test
+    // Only drive segments when at least one digit anode is active (active-low)
+    wire any_digit_active = ~&anodes;
+    assign seg = any_digit_active ? seg_tmp : 7'b1111111; // blank when no digit is enabled
+
+endmodule //SevenSegDecoder

@@ -24,17 +24,18 @@ module SevenSegDecoder_tb();
 
     reg [3:0] val_tb;
     wire [6:0] seg_tb;
-    reg anode_tb;
+    reg [7:0] anodes_tb;
 
     SevenSegDecoder uut (
         .val(val_tb),
         .seg(seg_tb),
-        .anode(anode_tb)
+        .anodes(anodes_tb)
     );
 
     initial begin
         // Keep the display enabled (active-low anode)
-        anode_tb = 1'b0;
+        anodes_tb[0] = 1'b0;
+        anodes_tb[7:1] = 7'b1111111; // Disable other digits if present
 
         // Test all values from 0 to 15
         for (val_tb = 0; val_tb < 16; val_tb = val_tb + 1) begin

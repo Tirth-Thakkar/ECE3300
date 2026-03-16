@@ -11,7 +11,7 @@ module TopModule_tb();
     reg [4:0] speed_setting_tb;
     reg [3:0] usr_input_tb;
     wire [6:0] seg_tb;
-    wire anode_tb;
+    wire [7:0] anodes_tb;
 
     TopModule uut (
         .clk(clk_tb),
@@ -23,7 +23,7 @@ module TopModule_tb();
         .speed_setting(speed_setting_tb),
         .usr_input(usr_input_tb),
         .seg(seg_tb),
-        .anode(anode_tb)
+        .anodes(anodes_tb)
     );
 
     // Clock generation
@@ -34,10 +34,10 @@ module TopModule_tb();
 
     // Monitor key signals each clock
     always @(posedge clk_tb) begin
-        $display("%0t | rst=%b sys_toggle=%b cntr_rst=%b cntr_en=%b up_down=%b speed=%02d usr=%02d | seg=%b anode=%b",
+        $display("%0t | rst=%b sys_toggle=%b cntr_rst=%b cntr_en=%b up_down=%b speed=%02d usr=%02d | seg=%b anodes=%b",
                  $time, rst_tb, sys_toggle_tb, cntr_rst_tb, cntr_enable_tb,
                  up_down_tb, speed_setting_tb, usr_input_tb,
-                 seg_tb, anode_tb);
+                 seg_tb, anodes_tb);
     end
 
     initial begin
