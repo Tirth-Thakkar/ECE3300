@@ -1,4 +1,4 @@
-`timescale 1ns / 10ps
+`timescale 1ns / 1ps
 // TODO: Add coverage for speed modes, reset and enable functions, and down counting. 
 module TopModule_tb();
 
@@ -41,38 +41,54 @@ module TopModule_tb();
     end
 
     initial begin
-        // Reset
+        // Initial values
         rst_tb = 1;
         cntr_rst_tb = 1;
-        cntr_enable_tb = 1;
+        cntr_enable_tb = 0; // start disabled to test enable behavior
         sys_toggle_tb = 0; // 0 = show counter output, 1 = show user input
         up_down_tb = 1;
         speed_setting_tb = 0;
         usr_input_tb = 0;
 
-        #20;
+        // Hold reset for a few clock cycles
+        repeat (10) @(posedge clk_tb);
         rst_tb = 0;
         cntr_rst_tb = 0;
 
-        // Quick sanity check: show each user input value within 1000ns
+        // Enable counter and run in up mode at multiple speeds
+        cntr_enable_tb = 1;
+        $display("=== TEST: Counter counting UP at different speeds ===");
+        for (integer s = 0; s < 4; s = s + 1) begin
+            speed_setting_tb = s;
+            $display("  speed_setting=%0d", speed_setting_tb);
+            // Give more cycles for slower speed settings (longer divide-by).
+            repeat (100 * (s + 1)) @(posedge clk_tb);
+        end
+
+        // Test counter reset behavior
+        $display("=== TEST: Counter reset assertion ===");
+        cntr_rst_tb = 1;
+        repeat (5) @(posedge clk_tb);
+        cntr_rst_tb = 0;
+        repeat (20) @(posedge clk_tb);
+
+        // Verify user input display works
         sys_toggle_tb = 1;    // show user input on display
         cntr_enable_tb = 0;  // disable counter during user-input test
-        up_down_tb = 1;
-        speed_setting_tb = 0;
-
+        $display("=== TEST: User input display ===");
         for (integer u = 0; u < 16; u = u + 1) begin
             usr_input_tb = u;
-            // Give the display a few clocks to settle for each user value.
             repeat (5) @(posedge clk_tb);
         end
 
-        // Then run the counter briefly to confirm it still works.
+        // Count down
         sys_toggle_tb = 0;
         cntr_enable_tb = 1;
-        up_down_tb = 1;
-        speed_setting_tb = 0;
-        repeat (50) @(posedge clk_tb);
-
+        up_down_tb = 0;
+        speed_setting_tb = 2;
+        $display("=== TEST: Counter counting DOWN ===");
+        // Run longer to let down count cycle through several values
+        repeat (500) @(posedge clk_tb);
         $finish;
     end
 
