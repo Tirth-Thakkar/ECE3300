@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module Mux #(
     parameter WIDTH = 32,
     parameter BIT_WIDTH = 1, 

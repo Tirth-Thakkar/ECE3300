@@ -1,4 +1,5 @@
 
+`timescale 1ns / 1ps
 module TopModule #(
     parameter SYS_WIDTH = 32, 
     parameter CNT_WIDTH = 4,
@@ -6,7 +7,7 @@ module TopModule #(
     )(
         input clk,
         input sys_rst,
-        input sys_toggle, // Down for User Input, Up for Counter Output
+        input sys_toggle, // 0 = counter output, 1 = user input
         input cntr_rst,
         input cntr_enable,
         input cntr_up_down, // 1 for up, 0 for down
@@ -37,10 +38,11 @@ module TopModule #(
     );
 
     wire [3:0] dsp_out;
+    // sys_toggle: 0 = show counter output, 1 = show user input
     Mux #(.WIDTH(2), .BIT_WIDTH(4)) mux2x1_4 (
-        .vals({counter_output, usr_input}), // Connect the counter output to the mux inputs
-        .sel(sys_toggle), // Use the user input as the select signal
-        .out(dsp_out) // Connect the mux output to wherever it needs to go (e.g., an output port or another module)
+        .vals({usr_input, counter_output}),
+        .sel(sys_toggle),
+        .out(dsp_out) 
     );
     
     SevenSegDecoder seven_seg_decoder (
@@ -48,5 +50,8 @@ module TopModule #(
         .anode(anode), 
         .seg(seg) 
     );
+
+    // Drive the 7-segment anode for a single-digit display (active-low enable)
+    assign anode = 1'b0;
 
 endmodule

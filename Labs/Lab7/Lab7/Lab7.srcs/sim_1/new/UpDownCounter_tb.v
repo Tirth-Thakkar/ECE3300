@@ -1,15 +1,19 @@
 `timescale 1ns / 1ps
-module UpDownCounter_tb();
+module UpDownCounter_tb #(
+        parameter COUNT_WIDTH_TB = 4
+    )();
 
     reg clk_tb;
     reg rst_tb;
     reg up_down_tb; // 1 for up, 0 for down
-    wire [3:0] count_tb; // 4-bit output for count
+    reg enable_tb;
+    wire [COUNT_WIDTH_TB-1:0] count_tb; // COUNT_WIDTH_TB-bit output for count
 
-    UpDownCounter uut (
+    UpDownCounter #(.COUNT_WIDTH(COUNT_WIDTH_TB)) uut (
         .clk(clk_tb),
         .rst(rst_tb),
         .up_down(up_down_tb),
+        .enable(enable_tb),
         .count(count_tb)
     );
 
@@ -23,6 +27,7 @@ module UpDownCounter_tb();
         // Initialize inputs
         rst_tb = 1; // Assert reset
         up_down_tb = 1; // Start counting up
+        enable_tb = 1; // Enable counting
 
         #10; // Wait for 10 time units
         rst_tb = 0; // Deassert reset

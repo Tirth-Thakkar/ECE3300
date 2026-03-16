@@ -24,7 +24,7 @@ module SevenSegDecoder_tb();
 
     reg [3:0] val_tb;
     wire [6:0] seg_tb;
-    wire anode_tb;
+    reg anode_tb;
 
     SevenSegDecoder uut (
         .val(val_tb),
@@ -33,6 +33,9 @@ module SevenSegDecoder_tb();
     );
 
     initial begin
+        // Keep the display enabled (active-low anode)
+        anode_tb = 1'b0;
+
         // Test all values from 0 to 15
         for (val_tb = 0; val_tb < 16; val_tb = val_tb + 1) begin
             #10; // Wait for 10 time units between changes

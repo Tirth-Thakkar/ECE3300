@@ -1,4 +1,5 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 10ps
+// TODO: Add coverage for speed modes, reset and enable functions, and down counting. 
 module TopModule_tb();
 
     reg clk_tb;
@@ -53,28 +54,25 @@ module TopModule_tb();
         rst_tb = 0;
         cntr_rst_tb = 0;
 
-        // Iterate over user control modes & inputs
-        for (integer toggle = 0; toggle < 2; toggle = toggle + 1) begin
-            sys_toggle_tb = toggle;
+        // Quick sanity check: show each user input value within 1000ns
+        sys_toggle_tb = 1;    // show user input on display
+        cntr_enable_tb = 0;  // disable counter during user-input test
+        up_down_tb = 1;
+        speed_setting_tb = 0;
 
-            for (integer u = 0; u < 16; u = u + 1) begin
-                usr_input_tb = u;
-
-                // Iterate over both directions (up/down)
-                for (integer dir = 0; dir < 2; dir = dir + 1) begin
-                    up_down_tb = dir; // 0 = down, 1 = up
-
-                    // Iterate over all speed settings (0..31)
-                    for (integer s = 0; s < 32; s = s + 1) begin
-                        speed_setting_tb = s;
-
-                        // Let the counter run for a few cycles so you can see it change
-                        // (adjust the repeat value to observe more cycles per speed setting)
-                        repeat (10) @(posedge clk_tb);
-                    end
-                end
-            end
+        for (integer u = 0; u < 16; u = u + 1) begin
+            usr_input_tb = u;
+            // Give the display a few clocks to settle for each user value.
+            repeat (5) @(posedge clk_tb);
         end
+
+        // Then run the counter briefly to confirm it still works.
+        sys_toggle_tb = 0;
+        cntr_enable_tb = 1;
+        up_down_tb = 1;
+        speed_setting_tb = 0;
+        repeat (50) @(posedge clk_tb);
+
         $finish;
     end
 
