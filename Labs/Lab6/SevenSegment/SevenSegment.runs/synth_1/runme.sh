@@ -37,4 +37,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log SevenSegment.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source SevenSegment.tcl
+EAStep vivado -log TopModule.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source TopModule.tcl
