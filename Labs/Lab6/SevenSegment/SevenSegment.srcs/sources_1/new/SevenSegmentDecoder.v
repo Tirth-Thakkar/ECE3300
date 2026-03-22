@@ -1,12 +1,13 @@
 `timescale 1ns/1ps
+
 module SevenSegDecoder (
     input [3:0] val,
     input [7:0] anodes,  // Active-low anode enables for 8 digits
     output [6:0] seg // active-LOW {a,b,c,d,e,f,g}
 );
-    
+
     reg [6:0] seg_tmp;
-    always @* begin
+    always_comb begin
         case (val)
             4'h0: seg_tmp=7'b1000000; 
             4'h1: seg_tmp=7'b1111001; 
