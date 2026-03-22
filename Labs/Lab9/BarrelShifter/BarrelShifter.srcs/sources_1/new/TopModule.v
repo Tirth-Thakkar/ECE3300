@@ -28,7 +28,8 @@ module TopModule #(
         input clk,
         input cntr_rst,
         input cntr_enable,
-        input up_down // 1 for up, 0 for down
+        input up_down, // 1 for up, 0 for down
+        input [(SECTIONS*CTL_WIDTH)-1:0] bit_control
     );
 
     generate
@@ -40,13 +41,13 @@ module TopModule #(
                 .rst(cntr_rst), // Connect to reset
                 .up_down(up_down), // Connect to control signal for counting direction
                 .enable(cntr_enable), // Connect to enable signal
-                .count() // Connect to something if needed
+                .count()
             );
 
             BarrelShifter #(.BIT_WIDTH(WIDTH-1), .BIT_CTL(CTL_WIDTH-1)) shifter (
                 .data_in(), // Example input, can be connected to a counter or other source
-                .bit_control(), // Example control, can be connected to a counter or other source
-                .data_out() // Connect to something if needed
+                .bit_control(bit_control[i+2:i]), // Two bits for control each section
+                .data_out()
             );
 
             SevenSegDecoder #(.WIDTH(WIDTH-1)) decoder (

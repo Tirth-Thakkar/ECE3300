@@ -1,9 +1,10 @@
 
 `timescale 1ns / 1ps
+
 module TopModule #(
-    parameter SYS_WIDTH = 32, 
-    parameter CNT_WIDTH = 4,
-    parameter SYS_CTRL_WIDTH = $clog2(SYS_WIDTH)
+    parameter int SYS_WIDTH = 32,
+    parameter int CNT_WIDTH = 4,
+    parameter int SYS_CTRL_WIDTH = $clog2(SYS_WIDTH)
     )(
         input clk,
         input sys_rst, // BTNC
@@ -42,13 +43,13 @@ module TopModule #(
     Mux #(.WIDTH(2), .BIT_WIDTH(4)) mux2x1_4 (
         .vals({usr_input, counter_output}),
         .sel(sys_toggle),
-        .out(dsp_out) 
+        .out(dsp_out)
     );
-    
+
     SevenSegDecoder seven_seg_decoder (
         .val(dsp_out), // Connect the mux output to the decoder input
-        .anodes(anodes), // Pass all anodes so the decoder can blank segments when no digit is enabled
-        .seg(seg) 
+        .anodes(anodes), // Pass anodes to decoder to blank segments when no digit is enabled
+        .seg(seg)
     );
 
     // Drive the 7-segment anode for a single-digit display (active-low enable)

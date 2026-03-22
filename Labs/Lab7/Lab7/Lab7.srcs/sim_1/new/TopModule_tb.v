@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-// TODO: Add coverage for speed modes, reset and enable functions, and down counting. 
+
 module TopModule_tb();
 
     reg clk_tb;
@@ -34,10 +34,19 @@ module TopModule_tb();
 
     // Monitor key signals each clock
     always @(posedge clk_tb) begin
-        $display("%0t | rst=%b sys_toggle=%b cntr_rst=%b cntr_en=%b up_down=%b speed=%02d usr=%02d | seg=%b anodes=%b",
-                 $time, rst_tb, sys_toggle_tb, cntr_rst_tb, cntr_enable_tb,
-                 up_down_tb, speed_setting_tb, usr_input_tb,
-                 seg_tb, anodes_tb);
+        $display(
+            "%0t | r=%b t=%b c_rst=%b c_en=%b u_d=%b spd=%02d usr=%02d | seg=%b an=%b",
+            $time,
+                rst_tb,
+                sys_toggle_tb,
+                cntr_rst_tb,
+                cntr_enable_tb,
+                up_down_tb,
+                speed_setting_tb,
+                usr_input_tb,
+                seg_tb,
+                anodes_tb
+        );
     end
 
     initial begin

@@ -1,28 +1,7 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 03/13/2026 06:17:28 PM
-// Design Name: 
-// Module Name: SpeedController
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
 module SpeedController #(
-        parameter CNTRL_WIDTH = 32,
-        parameter SEL_WIDTH = $clog2(CNTRL_WIDTH)
+        parameter int CNTRL_WIDTH = 32,
+        parameter int SEL_WIDTH = $clog2(CNTRL_WIDTH)
     )(
         input clk,
         input rst,
