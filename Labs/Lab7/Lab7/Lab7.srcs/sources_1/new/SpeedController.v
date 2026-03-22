@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 module SpeedController #(
-        parameter int CNTRL_WIDTH = 32,
-        parameter int SEL_WIDTH = $clog2(CNTRL_WIDTH)
+    parameter CNTRL_WIDTH = 32,
+    parameter SEL_WIDTH = $clog2(CNTRL_WIDTH)
     )(
         input clk,
         input rst,

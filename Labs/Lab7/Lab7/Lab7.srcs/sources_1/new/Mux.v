@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
 module Mux #(
-    parameter int WIDTH = 32,
-    parameter int BIT_WIDTH = 1,
+    parameter WIDTH = 32,
+    parameter BIT_WIDTH = 1,
     // Width of the select signal (handles WIDTH == 1)
-    parameter int SEL_WIDTH = (WIDTH > 1) ? $clog2(WIDTH) : 1
+    parameter SEL_WIDTH = (WIDTH > 1) ? $clog2(WIDTH) : 1
 )(
     input  [WIDTH*BIT_WIDTH-1:0] vals, // Packed input words: [WIDTH*BIT_WIDTH-1:0]
     input  [SEL_WIDTH-1:0] sel, // Selects which word to pass through

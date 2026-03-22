@@ -2,9 +2,9 @@
 `timescale 1ns / 1ps
 
 module TopModule #(
-    parameter int SYS_WIDTH = 32,
-    parameter int CNT_WIDTH = 4,
-    parameter int SYS_CTRL_WIDTH = $clog2(SYS_WIDTH)
+    parameter SYS_WIDTH = 32,
+    parameter CNT_WIDTH = 4,
+    parameter SYS_CTRL_WIDTH = $clog2(SYS_WIDTH)
     )(
         input clk,
         input sys_rst, // BTNC

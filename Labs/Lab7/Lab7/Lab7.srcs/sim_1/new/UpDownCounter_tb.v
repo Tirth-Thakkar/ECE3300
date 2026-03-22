@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 module UpDownCounter_tb #(
-        parameter int COUNT_WIDTH_TB = 4
+    parameter COUNT_WIDTH_TB = 4
     )();
 
     reg clk_tb;

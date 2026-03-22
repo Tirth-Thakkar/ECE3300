@@ -7,7 +7,7 @@ module SevenSegDecoder (
 );
 
     reg [6:0] seg_tmp;
-    always_comb begin
+    always@(*) begin
         case (val)
             4'h0: seg_tmp=7'b1000000;
             4'h1: seg_tmp=7'b1111001;
