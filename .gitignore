@@ -26,6 +26,8 @@ README*
 *.mem
 *.jou
 *.js
+*.str
+*.wdb
 
 xsim*
 __synthesis*
