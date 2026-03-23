@@ -1,29 +1,9 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 03/22/2026 12:26:51 AM
-// Design Name: 
-// Module Name: TopModule
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module TopModule #(
-    parameter SECTIONS = 8,
-    parameter WIDTH = 4,
-    parameter CTL_WIDTH = $clog2(WIDTH)
+    parameter int SECTIONS = 8,
+    parameter int WIDTH = 4,
+    parameter int CTL_WIDTH = $clog2(WIDTH)
     )(
         input clk,
         input cntr_rst,

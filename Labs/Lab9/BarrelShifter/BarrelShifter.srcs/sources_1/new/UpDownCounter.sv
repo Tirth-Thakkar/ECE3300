@@ -1,6 +1,6 @@
 
 module UpDownCounter #(
-    parameter COUNT_WIDTH = 32
+    parameter int COUNT_WIDTH = 32
     )(
         input clk,
         input rst,
