@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "/home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.runs/synth_1/TopModule.tcl"
+  variable script "/home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.runs/synth_1/TopModule.tcl"
   variable category "vivado_synth"
 }
 
@@ -56,7 +56,6 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 6
 set_param general.usePosixSpawnForFork 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a100tcsg324-1
@@ -64,25 +63,25 @@ create_project -in_memory -part xc7a100tcsg324-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.cache/wt [current_project]
-set_property parent.project_path /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.xpr [current_project]
+set_property webtalk.parent_dir /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.cache/wt [current_project]
+set_property parent.project_path /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.cache/ip [current_project]
+set_property ip_output_repo /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/SevenSegDecoder.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/DecimalTable.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/BinaryToBCD.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/HexTable.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/LSFR.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/Mux.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/SevenSegDriver.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/SpeedController.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/UpDownCounter.v
-  /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/TopModule.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/SevenSegDecoder.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/DecimalTable.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/BinaryToBCD.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/HexTable.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/LSFR.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/Mux.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/SevenSegDriver.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/SpeedController.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/UpDownCounter.v
+  /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/sources_1/new/TopModule.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -93,12 +92,12 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/constrs_1/new/Lab8.xdc
-set_property used_in_implementation false [get_files /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/constrs_1/new/Lab8.xdc]
+read_xdc /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/constrs_1/new/Lab8.xdc
+set_property used_in_implementation false [get_files /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/constrs_1/new/Lab8.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/utils_1/imports/synth_1/TopModule.dcp
+read_checkpoint -auto_incremental -incremental /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/utils_1/imports/synth_1/TopModule.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

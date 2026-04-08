@@ -26,32 +26,33 @@ module TopModule #(
     wire ctrl_clk;
     wire [DATA_WIDTH-1:0] counter_out;
     wire [DATA_WIDTH-1:0] lfsr_out;
+    wire speed_tick;
 
     wire [31:0] hex_vals;
     wire [15:0] dec_src;
     wire [19:0] dec_bcd;
     wire [31:0] dec_vals;
     wire [31:0] display_vals;
-
+    
     SpeedController #(.CNTRL_WIDTH(SYS_WIDTH)) speed_controller (
         .clk(clk),
         .rst(sys_rst),
         .speed_setting(speed_setting),
-        .cntrl_speed(ctrl_clk)
+        .tick(speed_tick)
     );
-
+    
     UpDownCounter #(.COUNT_WIDTH(DATA_WIDTH)) counter (
-        .clk(ctrl_clk),
+        .clk(clk),
         .rst(cntr_rst || sys_rst),
         .up_down(cntr_up_down),
-        .enable(cntr_enable),
+        .enable(cntr_enable && speed_tick),
         .count(counter_out)
     );
 
     LFSR #(.WIDTH(DATA_WIDTH)) lfsr (
-        .clk(ctrl_clk),
+        .clk(clk),
         .rst(sys_rst),
-        .enable(cntr_enable),
+        .enable(cntr_enable && speed_tick),
         .load(lfsr_load),
         .seed(16'hACE1),
         .state(lfsr_out)

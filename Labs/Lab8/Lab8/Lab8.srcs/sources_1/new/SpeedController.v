@@ -1,29 +1,28 @@
-`timescale 1ns / 1ps
 module SpeedController #(
-    parameter CNTRL_WIDTH = 32,
+    parameter CNTRL_WIDTH = 16,
     parameter SEL_WIDTH = $clog2(CNTRL_WIDTH)
-    )(
-        input clk,
-        input rst,
-        input [SEL_WIDTH-1:0] speed_setting, // 5-bit input for speed setting (0-31)
-        output cntrl_speed // Derived clock output (one selected bit of a 32-bit counter)
-    );
+)(
+    input clk,
+    input rst,
+    input [SEL_WIDTH-1:0] speed_setting,
+    output tick
+);
 
-        // 32-bit up-counter (runs continuously) used to generate a variable-rate clock
-        wire [CNTRL_WIDTH-1:0] counter_out;
-        UpDownCounter #(.COUNT_WIDTH(CNTRL_WIDTH)) counter (
-            .clk(clk),
-            .rst(rst),
-            .up_down(1'b1), // Always count up
-            .enable(1'b1), // Always enabled
-            .count(counter_out)
-        );
+    reg [CNTRL_WIDTH-1:0] counter;
+    reg sel_bit_d;
 
-        // 32x1 mux selects one bit of the counter according to speed_setting
-        Mux #(.WIDTH(CNTRL_WIDTH), .BIT_WIDTH(1)) mux32x1_1 (
-            .vals(counter_out),
-            .sel(speed_setting),
-            .out(cntrl_speed)
-        );
+    wire sel_bit;
+    assign sel_bit = counter[speed_setting];
 
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            counter   <= 0;
+            sel_bit_d <= 0;
+        end else begin
+            counter   <= counter + 1'b1;
+            sel_bit_d <= sel_bit;
+        end
+    end
+
+    assign tick = sel_bit & ~sel_bit_d;   // rising-edge pulse
 endmodule

@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module UpDownCounter #(
-    parameter COUNT_WIDTH = 32
+    parameter COUNT_WIDTH = 16
     )(
         input clk,
         input rst,

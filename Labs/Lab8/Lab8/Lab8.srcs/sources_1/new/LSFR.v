@@ -24,7 +24,7 @@ module LFSR #(
 
         always @(posedge clk or posedge rst) begin
             if (rst) begin
-                state_tmp <= {WIDTH{1'b0}};
+                state_tmp <= seed;
             end else if (load) begin
                 state_tmp <= seed;
             end else if (enable) begin

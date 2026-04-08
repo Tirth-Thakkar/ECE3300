@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "/home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.runs/impl_1/TopModule.tcl"
+  variable script "/home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.runs/impl_1/TopModule.tcl"
   variable category "vivado_impl"
 }
 
@@ -113,15 +113,15 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.cache/wt [current_project]
-  set_property parent.project_path /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.xpr [current_project]
-  set_property ip_output_repo /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.cache/ip [current_project]
+  set_property webtalk.parent_dir /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.cache/wt [current_project]
+  set_property parent.project_path /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.xpr [current_project]
+  set_property ip_output_repo /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.runs/synth_1/TopModule.dcp
+  add_files -quiet /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.runs/synth_1/TopModule.dcp
 OPTRACE "read constraints: implementation" START { }
-  read_xdc /home/aaa/Vivado/Projects/AlyLab/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/constrs_1/new/Lab8.xdc
+  read_xdc /home/aaa/Vivado/Projects/ECE3300/Labs/Lab8/Lab8/Lab8.srcs/constrs_1/new/Lab8.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }
