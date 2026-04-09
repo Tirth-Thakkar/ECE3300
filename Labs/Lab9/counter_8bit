@@ -1,0 +1,42 @@
+module counter_8bit(
+    input  wire       clk,       // 8 MHz
+    input  wire       rst,       // active-high
+    input  wire       load,      // active-high load from switch
+    input  wire [7:0] load_val,  // loaded value (from switches)
+    input  wire [4:0] speed,     // speed selector
+    output reg  [7:0] count
+);
+    reg [31:0] prescale;
+
+    // Map speed to ticks per increment.
+    // This mapping gives a wide range; tweak if you want linear behavior.
+    function [31:0] ticks_per_inc(input [4:0] s);
+        begin
+            if (s == 5'd0) ticks_per_inc = 32'd1;
+            else ticks_per_inc = 32'd1000 << (s - 1); // coarse exponential scale
+        end
+    endfunction
+
+    reg [31:0] ticks;
+
+    always @(*) ticks = ticks_per_inc(speed);
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            prescale <= 32'd0;
+            count <= 8'd0;
+        end else if (load) begin
+            prescale <= 32'd0;
+            count <= load_val;
+        end else begin
+            if (prescale >= ticks) begin
+                prescale <= 32'd0;
+                count <= count + 1'b1;
+            end else begin
+                prescale <= prescale + 1'b1;
+            end
+        end
+    end
+endmodule
+
+

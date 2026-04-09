@@ -1,0 +1,20 @@
+module pwm_8bit(
+    input  wire       clk,    // 8 MHz from PLL
+    input  wire       rst,    // active-high reset
+    input  wire [7:0] duty,   // 0..255 duty
+    output reg        pwm_out
+);
+    reg [7:0] ctr;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            ctr <= 8'd0;
+            pwm_out <= 1'b0;
+        end else begin
+            ctr <= ctr + 1'b1;
+            pwm_out <= (ctr < duty);
+        end
+    end
+endmodule
+
+

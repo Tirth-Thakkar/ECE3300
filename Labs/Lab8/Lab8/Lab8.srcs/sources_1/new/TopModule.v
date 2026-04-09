@@ -23,52 +23,60 @@ module TopModule #(
         output [7:0] anodes
     );
 
-    wire ctrl_clk;
-    wire [DATA_WIDTH-1:0] counter_out;
-    wire [DATA_WIDTH-1:0] lfsr_out;
-    wire speed_tick;
+wire ctrl_clk;
+wire [DATA_WIDTH-1:0] counter_out;
+wire [DATA_WIDTH-1:0] lfsr_out;
+wire speed_tick;
 
-    wire [31:0] hex_vals;
-    wire [15:0] dec_src;
-    wire [19:0] dec_bcd;
-    wire [31:0] dec_vals;
-    wire [31:0] display_vals;
-    
-    SpeedController #(.CNTRL_WIDTH(SYS_WIDTH)) speed_controller (
-        .clk(clk),
-        .rst(sys_rst),
-        .speed_setting(speed_setting),
-        .tick(speed_tick)
-    );
-    
-    UpDownCounter #(.COUNT_WIDTH(DATA_WIDTH)) counter (
-        .clk(clk),
-        .rst(cntr_rst || sys_rst),
-        .up_down(cntr_up_down),
-        .enable(cntr_enable && speed_tick),
-        .count(counter_out)
-    );
+wire [31:0] hex_vals;
+wire [15:0] dec_src_raw;
+wire [15:0] dec_src_wrap;
+wire [19:0] dec_bcd;
+wire [31:0] dec_vals;
+wire [31:0] display_vals;
 
-    LFSR #(.WIDTH(DATA_WIDTH)) lfsr (
-        .clk(clk),
-        .rst(sys_rst),
-        .enable(cntr_enable && speed_tick),
-        .load(lfsr_load),
-        .seed(16'hACE1),
-        .state(lfsr_out)
-    );
+SpeedController #(.CNTRL_WIDTH(SYS_WIDTH)) speed_controller (
+    .clk(clk),
+    .rst(sys_rst),
+    .speed_setting(speed_setting),
+    .tick(speed_tick)
+);
 
-    assign hex_vals = {counter_out, lfsr_out};
-    assign dec_src  = hex_decimal_mode ? lfsr_out : counter_out;
-    assign dec_vals = {12'd0, dec_bcd};
+UpDownCounter #(.COUNT_WIDTH(DATA_WIDTH)) counter (
+    .clk(clk),
+    .rst(cntr_rst || sys_rst),
+    .up_down(cntr_up_down),
+    .enable(cntr_enable && speed_tick),
+    .count(counter_out)
+);
 
-    assign display_vals = hex_decimal_sel ? dec_vals : hex_vals;
+LFSR #(.WIDTH(DATA_WIDTH)) lfsr (
+    .clk(clk),
+    .rst(sys_rst),
+    .enable(cntr_enable && speed_tick),
+    .load(lfsr_load),
+    .seed(16'hACE1),
+    .state(lfsr_out)
+);
+//og error was output handling
+// pick which value decimal mode should show
+assign dec_src_raw  = hex_decimal_mode ? lfsr_out : counter_out;
 
-    BinaryToBCD #(.BIN_WIDTH(16), .BCD_DIGITS(5)) b2b (
-        .bin(dec_src),
-        .bcd(dec_bcd)
-    );
+// intentional 4-digit decimal wraparound
+assign dec_src_wrap = dec_src_raw % 10000;
 
+// hex mode shows both values
+assign hex_vals = {counter_out, lfsr_out};
+
+// decimal mode shows only 4 digits in the lower half
+assign dec_vals = {16'hFFFF, dec_bcd[15:0]};
+
+assign display_vals = hex_decimal_sel ? dec_vals : hex_vals;
+
+BinaryToBCD #(.BIN_WIDTH(16), .BCD_DIGITS(5)) b2b (
+    .bin(dec_src_wrap),
+    .bcd(dec_bcd)
+);
     SevenSegDriver #(
         .DIGITS(8),
         .DIGIT_WIDTH(4),

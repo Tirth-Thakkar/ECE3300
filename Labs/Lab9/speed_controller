@@ -1,0 +1,29 @@
+module speed_controller(
+    input  wire clk,            // 8 MHz input from PLL
+    input  wire rst,
+    input  wire [4:0] speed,    // 0–31 from SW11–SW15
+    output reg  clk_out         // variable-rate clock
+);
+
+    // The divider value = 2^(speed)
+    // Higher speed → Faster clk_out
+    reg [31:0] counter;
+    wire [31:0] divider = 32'd1 << speed;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            counter <= 0;
+            clk_out <= 0;
+        end else begin
+            if (counter >= divider) begin
+                counter <= 0;
+                clk_out <= ~clk_out;  // toggle output
+            end else begin
+                counter <= counter + 1;
+            end
+        end
+    end
+
+endmodule
+
+
