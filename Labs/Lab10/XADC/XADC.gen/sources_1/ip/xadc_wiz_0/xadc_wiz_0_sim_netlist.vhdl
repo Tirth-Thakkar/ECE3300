@@ -2,7 +2,7 @@
 -- Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
--- Date        : Mon Apr 13 14:01:29 2026
+-- Date        : Tue May  5 11:32:10 2026
 -- Host        : Tirth-Thakkar running 64-bit Ubuntu 22.04.5 LTS
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/tirth/Classes/ECE3300/Labs/Lab10/XADC/XADC.gen/sources_1/ip/xadc_wiz_0/xadc_wiz_0_sim_netlist.vhdl
@@ -23,6 +23,8 @@ entity xadc_wiz_0 is
     di_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     dwe_in : in STD_LOGIC;
     reset_in : in STD_LOGIC;
+    vauxp3 : in STD_LOGIC;
+    vauxn3 : in STD_LOGIC;
     busy_out : out STD_LOGIC;
     channel_out : out STD_LOGIC_VECTOR ( 4 downto 0 );
     do_out : out STD_LOGIC_VECTOR ( 15 downto 0 );
@@ -52,7 +54,7 @@ architecture STRUCTURE of xadc_wiz_0 is
 begin
 inst: unisim.vcomponents.XADC
     generic map(
-      INIT_40 => X"0000",
+      INIT_40 => X"0013",
       INIT_41 => X"31A0",
       INIT_42 => X"0400",
       INIT_43 => X"0000",
@@ -114,8 +116,12 @@ inst: unisim.vcomponents.XADC
       MUXADDR(4 downto 0) => NLW_inst_MUXADDR_UNCONNECTED(4 downto 0),
       OT => ot_out,
       RESET => reset_in,
-      VAUXN(15 downto 0) => B"0000000000000000",
-      VAUXP(15 downto 0) => B"0000000000000000",
+      VAUXN(15 downto 4) => B"000000000000",
+      VAUXN(3) => vauxn3,
+      VAUXN(2 downto 0) => B"000",
+      VAUXP(15 downto 4) => B"000000000000",
+      VAUXP(3) => vauxp3,
+      VAUXP(2 downto 0) => B"000",
       VN => vn_in,
       VP => vp_in
     );

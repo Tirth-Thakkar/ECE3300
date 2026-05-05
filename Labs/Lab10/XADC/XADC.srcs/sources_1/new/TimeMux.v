@@ -7,9 +7,9 @@ module TimeMux #(
 ) (
     input wire clk,
     input wire reset,
-    input wire [NUM_DIGITS*DIGIT_SELECT_WIDTH-1:0] vals,
+    input wire [NUM_DIGITS*DIGIT_WIDTH-1:0] vals,
 
-    output reg [6:0] seg,
+    output reg [DIGIT_WIDTH-1:0] seg,
     output reg [NUM_DIGITS-1:0] anodes
 );
 
@@ -17,7 +17,7 @@ module TimeMux #(
     wire [DIGIT_SELECT_WIDTH-1:0] digit_select;
 
 
-    assign digit_select = refresh_counter[REFRESH_LSB+DIGIT_SELECT_WIDTH-1:DIGIT_SELECT_WIDTH];
+    assign digit_select = refresh_counter[REFRESH_LSB +: DIGIT_SELECT_WIDTH];
 
     always @(posedge clk or posedge reset) begin : proc_dsp_time_mux
         if (reset) begin
@@ -26,9 +26,8 @@ module TimeMux #(
             anodes <= {NUM_DIGITS{1'b1}};
         end else begin
             refresh_counter <= refresh_counter + 1'b1;
-            seg <= seg[digit_select*DIGIT_WIDTH+:DIGIT_WIDTH];
+            seg <= vals[digit_select*DIGIT_WIDTH+:DIGIT_WIDTH];
             anodes <= ~({{(NUM_DIGITS-1){1'b0}}, 1'b1} << digit_select);
         end
     end
 endmodule
-

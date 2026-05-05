@@ -74,6 +74,10 @@ module xadc_wiz_0_sv (
   (* X_INTERFACE_IGNORE = "true" *)
   input wire vn_in,
   (* X_INTERFACE_IGNORE = "true" *)
+  input wire vauxp3,
+  (* X_INTERFACE_IGNORE = "true" *)
+  input wire vauxn3,
+  (* X_INTERFACE_IGNORE = "true" *)
   output wire user_temp_alarm_out,
   (* X_INTERFACE_IGNORE = "true" *)
   output wire vccint_alarm_out,
@@ -104,6 +108,8 @@ module xadc_wiz_0_sv (
     .reset_in(reset_in),
     .vp_in(vp_in),
     .vn_in(vn_in),
+    .vauxp3(vauxp3),
+    .vauxn3(vauxn3),
     .user_temp_alarm_out(user_temp_alarm_out),
     .vccint_alarm_out(vccint_alarm_out),
     .vccaux_alarm_out(vccaux_alarm_out),

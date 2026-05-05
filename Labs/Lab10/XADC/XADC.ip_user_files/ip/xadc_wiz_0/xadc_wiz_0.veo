@@ -65,6 +65,8 @@ xadc_wiz_0 your_instance_name (
   .reset_in(reset_in),                        // input wire reset_in
   .vp_in(vp_in),                              // input wire vp_in
   .vn_in(vn_in),                              // input wire vn_in
+  .vauxp3(vauxp3),                            // input wire vauxp3
+  .vauxn3(vauxn3),                            // input wire vauxn3
   .user_temp_alarm_out(user_temp_alarm_out),  // output wire user_temp_alarm_out
   .vccint_alarm_out(vccint_alarm_out),        // output wire vccint_alarm_out
   .vccaux_alarm_out(vccaux_alarm_out),        // output wire vccaux_alarm_out

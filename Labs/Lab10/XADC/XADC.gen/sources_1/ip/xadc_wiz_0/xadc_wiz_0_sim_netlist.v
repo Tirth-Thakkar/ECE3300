@@ -2,7 +2,7 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-// Date        : Mon Apr 13 14:01:29 2026
+// Date        : Tue May  5 11:32:10 2026
 // Host        : Tirth-Thakkar running 64-bit Ubuntu 22.04.5 LTS
 // Command     : write_verilog -force -mode funcsim
 //               /home/tirth/Classes/ECE3300/Labs/Lab10/XADC/XADC.gen/sources_1/ip/xadc_wiz_0/xadc_wiz_0_sim_netlist.v
@@ -21,6 +21,8 @@ module xadc_wiz_0
     di_in,
     dwe_in,
     reset_in,
+    vauxp3,
+    vauxn3,
     busy_out,
     channel_out,
     do_out,
@@ -40,6 +42,8 @@ module xadc_wiz_0
   input [15:0]di_in;
   input dwe_in;
   input reset_in;
+  input vauxp3;
+  input vauxn3;
   output busy_out;
   output [4:0]channel_out;
   output [15:0]do_out;
@@ -69,6 +73,8 @@ module xadc_wiz_0
   wire ot_out;
   wire reset_in;
   wire user_temp_alarm_out;
+  wire vauxn3;
+  wire vauxp3;
   wire vccaux_alarm_out;
   wire vccint_alarm_out;
   wire vn_in;
@@ -81,7 +87,7 @@ module xadc_wiz_0
 
   (* BOX_TYPE = "PRIMITIVE" *) 
   XADC #(
-    .INIT_40(16'h0000),
+    .INIT_40(16'h0013),
     .INIT_41(16'h31A0),
     .INIT_42(16'h0400),
     .INIT_43(16'h0000),
@@ -138,8 +144,8 @@ module xadc_wiz_0
         .MUXADDR(NLW_inst_MUXADDR_UNCONNECTED[4:0]),
         .OT(ot_out),
         .RESET(reset_in),
-        .VAUXN({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .VAUXP({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .VAUXN({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,vauxn3,1'b0,1'b0,1'b0}),
+        .VAUXP({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,vauxp3,1'b0,1'b0,1'b0}),
         .VN(vn_in),
         .VP(vp_in));
 endmodule

@@ -56,6 +56,7 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 8
 set_param general.usePosixSpawnForFork 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a100tcsg324-1
@@ -95,6 +96,8 @@ read_xdc /home/tirth/Classes/ECE3300/Labs/Lab10/XADC/XADC.srcs/constrs_1/new/XAD
 set_property used_in_implementation false [get_files /home/tirth/Classes/ECE3300/Labs/Lab10/XADC/XADC.srcs/constrs_1/new/XADC.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental /home/tirth/Classes/ECE3300/Labs/Lab10/XADC/XADC.srcs/utils_1/imports/synth_1/TopModule.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

@@ -60,7 +60,7 @@
         "VCCPAUX_ALARM_UPPER": [ { "value": "1.8", "resolve_type": "user", "format": "float", "usage": "all" } ],
         "VCCDDRO_ALARM_LOWER": [ { "value": "1.15", "resolve_type": "user", "format": "float", "usage": "all" } ],
         "VCCDDRO_ALARM_UPPER": [ { "value": "1.25", "resolve_type": "user", "format": "float", "usage": "all" } ],
-        "SINGLE_CHANNEL_SELECTION": [ { "value": "TEMPERATURE", "resolve_type": "user", "usage": "all" } ],
+        "SINGLE_CHANNEL_SELECTION": [ { "value": "VAUXP3_VAUXN3", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
         "SINGLE_CHANNEL_ENABLE_CALIBRATION": [ { "value": "true", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "BIPOLAR_OPERATION": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "SINGLE_CHANNEL_ACQUISITION_TIME": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
@@ -90,7 +90,7 @@
         "CHANNEL_ENABLE_VAUXP0_VAUXN0": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "CHANNEL_ENABLE_VAUXP1_VAUXN1": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "CHANNEL_ENABLE_VAUXP2_VAUXN2": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
-        "CHANNEL_ENABLE_VAUXP3_VAUXN3": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+        "CHANNEL_ENABLE_VAUXP3_VAUXN3": [ { "value": "true", "value_src": "user", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "CHANNEL_ENABLE_VAUXP4_VAUXN4": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "CHANNEL_ENABLE_VAUXP5_VAUXN5": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
         "CHANNEL_ENABLE_VAUXP6_VAUXN6": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
@@ -199,7 +199,7 @@
         "C_HAS_VCCPINT_ALARM": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_HAS_VCCPAUX_ALARM": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_HAS_VCCDDRO_ALARM": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
-        "C_CONFIGURATION_R0": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "C_CONFIGURATION_R0": [ { "value": "19", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_CONFIGURATION_R1": [ { "value": "12704", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_CONFIGURATION_R2": [ { "value": "1024", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_ALARM_LIMIT_R0": [ { "value": "46573", "resolve_type": "generated", "format": "long", "usage": "all" } ],
@@ -229,7 +229,7 @@
         "C_VAUX0": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_VAUX1": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_VAUX2": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
-        "C_VAUX3": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "C_VAUX3": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_VAUX4": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_VAUX5": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_VAUX6": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
@@ -284,6 +284,8 @@
         "reset_in": [ { "direction": "in", "driver_value": "0" } ],
         "vp_in": [ { "direction": "in", "driver_value": "0" } ],
         "vn_in": [ { "direction": "in", "driver_value": "0" } ],
+        "vauxp3": [ { "direction": "in", "driver_value": "0" } ],
+        "vauxn3": [ { "direction": "in", "driver_value": "0" } ],
         "user_temp_alarm_out": [ { "direction": "out" } ],
         "vccint_alarm_out": [ { "direction": "out" } ],
         "vccaux_alarm_out": [ { "direction": "out" } ],
@@ -315,6 +317,15 @@
           "port_maps": {
             "V_N": [ { "physical_name": "vn_in" } ],
             "V_P": [ { "physical_name": "vp_in" } ]
+          }
+        },
+        "Vaux3": {
+          "vlnv": "xilinx.com:interface:diff_analog_io:1.0",
+          "abstraction_type": "xilinx.com:interface:diff_analog_io_rtl:1.0",
+          "mode": "slave",
+          "port_maps": {
+            "V_N": [ { "physical_name": "vauxn3" } ],
+            "V_P": [ { "physical_name": "vauxp3" } ]
           }
         },
         "dclk_in": {
@@ -350,5 +361,5 @@
       }
     }
   },
-  "checksum": "424a9112"
+  "checksum": "757ece8c"
 }

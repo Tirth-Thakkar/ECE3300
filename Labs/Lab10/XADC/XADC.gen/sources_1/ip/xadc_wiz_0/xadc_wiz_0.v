@@ -58,6 +58,8 @@ module xadc_wiz_0
           di_in,               // Input data bus for the dynamic reconfiguration port
           dwe_in,              // Write Enable for the dynamic reconfiguration port
           reset_in,            // Reset signal for the System Monitor control logic
+          vauxp3,              // Auxiliary channel 3
+          vauxn3,
           busy_out,            // ADC Busy signal
           channel_out,         // Channel Selection Outputs
           do_out,              // Output data bus for dynamic reconfiguration port
@@ -78,6 +80,8 @@ module xadc_wiz_0
           input [15:0] di_in;
           input dwe_in;
           input reset_in;
+          input vauxp3;
+          input vauxn3;
           input vp_in;
           input vn_in;
 
@@ -111,8 +115,8 @@ module xadc_wiz_0
           assign aux_channel_p[2] = 1'b0;
           assign aux_channel_n[2] = 1'b0;
 
-          assign aux_channel_p[3] = 1'b0;
-          assign aux_channel_n[3] = 1'b0;
+          assign aux_channel_p[3] = vauxp3;
+          assign aux_channel_n[3] = vauxn3;
 
           assign aux_channel_p[4] = 1'b0;
           assign aux_channel_n[4] = 1'b0;
@@ -150,7 +154,7 @@ module xadc_wiz_0
           assign aux_channel_p[15] = 1'b0;
           assign aux_channel_n[15] = 1'b0;
 XADC #(
-        .INIT_40(16'h0000), // config reg 0
+        .INIT_40(16'h0013), // config reg 0
         .INIT_41(16'h31A0), // config reg 1
         .INIT_42(16'h0400), // config reg 2
         .INIT_48(16'h0100), // Sequencer channel selection

@@ -2,7 +2,7 @@
 // Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-// Date        : Mon Apr 13 14:01:29 2026
+// Date        : Tue May  5 11:32:10 2026
 // Host        : Tirth-Thakkar running 64-bit Ubuntu 22.04.5 LTS
 // Command     : write_verilog -force -mode synth_stub
 //               /home/tirth/Classes/ECE3300/Labs/Lab10/XADC/XADC.gen/sources_1/ip/xadc_wiz_0/xadc_wiz_0_stub.v
@@ -16,9 +16,9 @@
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
 (* CORE_GENERATION_INFO = "xadc_wiz_0,xadc_wiz_v3_3_13,{component_name=xadc_wiz_0,enable_axi=false,enable_axi4stream=false,dclk_frequency=100,enable_busy=true,enable_convst=false,enable_convstclk=false,enable_dclk=true,enable_drp=true,enable_eoc=true,enable_eos=true,enable_vbram_alaram=false,enable_vccddro_alaram=false,enable_Vccint_Alaram=true,enable_Vccaux_alaram=true,enable_vccpaux_alaram=false,enable_vccpint_alaram=false,ot_alaram=true,user_temp_alaram=true,timing_mode=continuous,channel_averaging=None,sequencer_mode=off,startup_channel_selection=single_channel}" *) 
 module xadc_wiz_0(daddr_in, dclk_in, den_in, di_in, dwe_in, reset_in, 
-  busy_out, channel_out, do_out, drdy_out, eoc_out, eos_out, ot_out, vccaux_alarm_out, 
-  vccint_alarm_out, user_temp_alarm_out, alarm_out, vp_in, vn_in)
-/* synthesis syn_black_box black_box_pad_pin="daddr_in[6:0],den_in,di_in[15:0],dwe_in,reset_in,busy_out,channel_out[4:0],do_out[15:0],drdy_out,eoc_out,eos_out,ot_out,vccaux_alarm_out,vccint_alarm_out,user_temp_alarm_out,alarm_out,vp_in,vn_in" */
+  vauxp3, vauxn3, busy_out, channel_out, do_out, drdy_out, eoc_out, eos_out, ot_out, 
+  vccaux_alarm_out, vccint_alarm_out, user_temp_alarm_out, alarm_out, vp_in, vn_in)
+/* synthesis syn_black_box black_box_pad_pin="daddr_in[6:0],den_in,di_in[15:0],dwe_in,reset_in,vauxp3,vauxn3,busy_out,channel_out[4:0],do_out[15:0],drdy_out,eoc_out,eos_out,ot_out,vccaux_alarm_out,vccint_alarm_out,user_temp_alarm_out,alarm_out,vp_in,vn_in" */
 /* synthesis syn_force_seq_prim="dclk_in" */;
   input [6:0]daddr_in;
   input dclk_in /* synthesis syn_isclock = 1 */;
@@ -26,6 +26,8 @@ module xadc_wiz_0(daddr_in, dclk_in, den_in, di_in, dwe_in, reset_in,
   input [15:0]di_in;
   input dwe_in;
   input reset_in;
+  input vauxp3;
+  input vauxn3;
   output busy_out;
   output [4:0]channel_out;
   output [15:0]do_out;
