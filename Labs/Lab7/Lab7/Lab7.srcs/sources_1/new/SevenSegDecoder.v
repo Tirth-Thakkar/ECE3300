@@ -2,7 +2,7 @@
 
 module SevenSegDecoder (
     input [3:0] val,
-    input [7:0] anodes,  // Active-low anode enables for 8 digits
+    input [3:0] anodes,  // Active-low anode enables for 8 digits
     output [6:0] seg // active-LOW {a,b,c,d,e,f,g}
 );
 
